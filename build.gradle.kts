@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    alias(libs.plugins.spotless)
 }
 
 repositories {
@@ -14,6 +15,13 @@ dependencies {
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
+spotless {
+    java {
+        palantirJavaFormat().style("GOOGLE")
+        formatAnnotations()
     }
 }
 
