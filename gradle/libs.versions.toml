@@ -1,0 +1,8 @@
+[libraries]
+jspecify = "org.jspecify:jspecify:0.3.0"
+
+junit-jupiter = "org.junit.jupiter:junit-jupiter:5.10.2"
+
+[plugins]
+spotless = { id = "com.diffplug.spotless", version = "6.25.0" }
+maven-publish = { id = "com.vanniktech.maven.publish", version = "0.28.0" }
