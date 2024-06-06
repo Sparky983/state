@@ -3,9 +3,7 @@ name: Deploy docs
 on:
   push:
     branches:
-      - main
-    tags:
-      - '**'
+      - feature/documentation
   workflow_dispatch:
 
 permissions:
