@@ -14,15 +14,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MutableStateOfTest {
+class StateOfTest {
   static int TIMES = 1000;
   static int THREADS = 10;
 
-  MutableState<Integer> state;
+  State<Integer> state;
 
   @BeforeEach
   void setUp() {
-    this.state = MutableState.of(0);
+    this.state = State.of(0);
   }
 
   @Test
@@ -49,11 +49,18 @@ class MutableStateOfTest {
 
   @Test
   void testMap() {
-    List<String> values = new ArrayList<>();
-    this.state.map(String::valueOf).subscribe(values::add);
-    this.state.set(1);
+    List<Integer> regularValues = new ArrayList<>();
+    this.state.subscribe(regularValues::add);
 
-    assertEquals(Arrays.asList("0", "1"), values);
+    State<String> map = this.state.map(String::valueOf);
+    List<String> mapValues = new ArrayList<>();
+    map.subscribe(mapValues::add);
+
+    this.state.set(1);
+    map.set("2");
+
+    assertEquals(Arrays.asList(0, 1), regularValues);
+    assertEquals(Arrays.asList("0", "1", "2"), mapValues);
   }
 
   @Test
