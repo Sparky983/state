@@ -1,5 +1,4 @@
 /**
- * @see me.sparky983.state.MutableState
  * @see me.sparky983.state.State
  * @since 0.1
  */

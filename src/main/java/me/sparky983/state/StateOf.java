@@ -9,16 +9,16 @@ import java.util.function.Function;
 import org.jspecify.annotations.Nullable;
 
 /**
- * The default {@link MutableState} implementation, that takes a value as input.
+ * The default {@link State} implementation, that takes a value as input.
  *
  * @param <T> the type of the state
  */
-final class MutableStateOf<T extends @Nullable Object> implements MutableState<T> {
+final class StateOf<T extends @Nullable Object> implements State<T> {
   private Map<Subscription, Consumer<? super T>> subscriptions = Collections.emptyMap();
 
   private T value;
 
-  MutableStateOf(T value) {
+  StateOf(T value) {
     this.value = value;
   }
 
@@ -53,7 +53,7 @@ final class MutableStateOf<T extends @Nullable Object> implements MutableState<T
 
   @Override
   public <R extends @Nullable Object> State<R> map(Function<? super T, ? extends R> mapper) {
-    MutableState<R> state = MutableState.of(mapper.apply(this.value));
+    State<R> state = State.of(mapper.apply(this.value));
     this.subscribe0(value -> state.set(mapper.apply(value)));
     return state;
   }
@@ -69,17 +69,16 @@ final class MutableStateOf<T extends @Nullable Object> implements MutableState<T
   private final class MutableStateSubscription implements Subscription {
     @Override
     public void cancel() {
-      synchronized (MutableStateOf.this) {
-        Map<Subscription, Consumer<? super T>> copy =
-            new HashMap<>(MutableStateOf.this.subscriptions);
+      synchronized (StateOf.this) {
+        Map<Subscription, Consumer<? super T>> copy = new HashMap<>(StateOf.this.subscriptions);
         copy.remove(this);
-        MutableStateOf.this.subscriptions = copy;
+        StateOf.this.subscriptions = copy;
       }
     }
 
     @Override
     public boolean isCanceled() {
-      return !MutableStateOf.this.subscriptions.containsKey(this);
+      return !StateOf.this.subscriptions.containsKey(this);
     }
   }
 }
