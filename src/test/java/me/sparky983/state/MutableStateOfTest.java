@@ -26,6 +26,11 @@ class MutableStateOfTest {
   }
 
   @Test
+  void testGet() {
+    assertEquals(0, this.state.get());
+  }
+
+  @Test
   void testSubscription() {
     List<Integer> values = new ArrayList<>();
     this.state.subscribe(values::add);
@@ -49,10 +54,15 @@ class MutableStateOfTest {
 
   @Test
   void testMap() {
+    State<String> map = this.state.map(String::valueOf);
     List<String> values = new ArrayList<>();
-    this.state.map(String::valueOf).subscribe(values::add);
+    map.subscribe(values::add);
+
+    assertEquals("0", map.get());
+
     this.state.set(1);
 
+    assertEquals("1", map.get());
     assertEquals(Arrays.asList("0", "1"), values);
   }
 
