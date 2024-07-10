@@ -70,8 +70,7 @@ final class StateOf<T extends @Nullable Object> implements State<T> {
     @Override
     public void cancel() {
       synchronized (StateOf.this) {
-        Map<Subscription, Consumer<? super T>> copy =
-            new HashMap<>(StateOf.this.subscriptions);
+        Map<Subscription, Consumer<? super T>> copy = new HashMap<>(StateOf.this.subscriptions);
         copy.remove(this);
         StateOf.this.subscriptions = copy;
       }
