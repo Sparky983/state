@@ -12,9 +12,9 @@ export default defineConfig({
     ],
     sidebar: [
       {
-        text: 'Guides',
         items: [
-          { text: 'Getting Started', link: '/' }
+          { text: 'Installation', link: '/' },
+          { text: 'Introduction', link: '/introduction'}
         ]
       }
     ],
