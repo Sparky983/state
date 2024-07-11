@@ -55,7 +55,6 @@ assert doubleCount.get() == 10;
 
 ### Subscribe
 
-
 `State` objects implement the [observer pattern][observer-pattern]. This means
 that mutations to a state object can be tracked. When subscribed to, the
 subscriber is notified of the current value and any subsequent values.
