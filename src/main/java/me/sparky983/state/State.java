@@ -14,7 +14,7 @@ import org.jspecify.annotations.Nullable;
  * @see MutableState
  * @since 0.1
  */
-public interface State<T extends @Nullable Object> {
+public interface State<T extends @Nullable Object> extends Observer<T> {
   /**
    * Returns the current value of this state.
    *
@@ -23,29 +23,27 @@ public interface State<T extends @Nullable Object> {
   T get();
 
   /**
-   * Maps this with the given mapping function.
+   * {@inheritDoc}
    *
-   * @param mapper the mapping function
-   * @return the new state
-   * @param <R> the type of the new state
-   * @throws NullPointerException if the mapper is {@code null}.
+   * @param mapper {@inheritDoc}
+   * @return new state
+   * @param <R> {@inheritDoc}
+   * @throws NullPointerException {@inheritDoc}
    * @since 0.1
    */
+  @Override
   <R extends @Nullable Object> State<R> map(Function<? super T, ? extends R> mapper);
 
   /**
-   * Creates a new subscription and emits values to the given subscriber by calling its
-   * {@link Consumer#accept(Object)} method.
+   * {@inheritDoc}
    *
    * <p>The latest value is instantly replayed.
    *
-   * <p>Once the subscriber has been subscribed, it will receive events indefinitely until
-   * {@linkplain Subscription#cancel() canceled}.
-   *
-   * @param subscriber the given subscriber
-   * @return the subscription
-   * @throws NullPointerException if the subscriber is {@code null}.
+   * @param subscriber {@inheritDoc}
+   * @return {@inheritDoc}
+   * @throws NullPointerException {@inheritDoc}
    * @since 0.1
    */
+  @Override
   Subscription subscribe(Consumer<? super T> subscriber);
 }
